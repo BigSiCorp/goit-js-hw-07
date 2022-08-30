@@ -36,10 +36,12 @@ function originalImgOpener(event) {
   let instance = basicLightbox.create(
     `<img src="${event.target.dataset.source}" width="1200">`,
     {
-      onClose: () => true,
+      onClose: () => false,
     }
   );
   instance.show();
+
+  const modalWindow = document.querySelector(".basicLightbox");
   document.addEventListener("keydown", modalWindowCloser);
 
   function modalWindowCloser(event) {
@@ -47,8 +49,7 @@ function originalImgOpener(event) {
     if (event.code !== "Escape") {
       return;
     }
-    instance.close();
+    modalWindow.classList.remove("basicLightbox--visible");
+    setTimeout(modalWindow.remove(), 5000);
   }
 }
-
-const modalWindow = document.querySelector(".basicLightbox");
