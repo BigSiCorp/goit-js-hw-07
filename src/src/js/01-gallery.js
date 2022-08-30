@@ -51,5 +51,6 @@ function originalImgOpener(event) {
     }
     modalWindow.classList.remove("basicLightbox--visible");
     setTimeout(modalWindow.remove(), 5000);
+    document.removeEventListener("keydown", modalWindowCloser);
   }
 }
