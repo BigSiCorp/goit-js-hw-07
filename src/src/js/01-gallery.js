@@ -33,7 +33,7 @@ function originalImgOpener(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  let instance = basicLightbox.create(
+  const instance = basicLightbox.create(
     `<img src="${event.target.dataset.source}" width="1200">`,
     {
       onClose: () => false,
@@ -50,7 +50,7 @@ function originalImgOpener(event) {
       return;
     }
     modalWindow.classList.remove("basicLightbox--visible");
-    setTimeout(modalWindow.remove(), 5000);
+    modalWindow.remove();
     document.removeEventListener("keydown", modalWindowCloser);
   }
 }
