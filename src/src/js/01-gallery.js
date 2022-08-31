@@ -30,14 +30,13 @@ containerForGallery.addEventListener("click", originalImgOpener);
 function originalImgOpener(event) {
   event.preventDefault();
 
-  let closerUnblockerByClick = false;
   if (event.target.nodeName !== "IMG") {
     return;
   }
   const instance = basicLightbox.create(
     `<img src="${event.target.dataset.source}" width="1200">`,
     {
-      onClose: () => closerUnblockerByClick,
+      onClose: () => document.removeEventListener("keydown", modalWindowCloser),
     }
   );
   instance.show();
@@ -48,8 +47,6 @@ function originalImgOpener(event) {
     if (event.code !== "Escape") {
       return;
     }
-    closerUnblockerByClick = true;
-    instance.close();
-    document.removeEventListener("keydown", modalWindowCloser);
+    instance.close(instance);
   }
 }
