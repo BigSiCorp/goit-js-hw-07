@@ -29,28 +29,27 @@ containerForGallery.addEventListener("click", originalImgOpener);
 
 function originalImgOpener(event) {
   event.preventDefault();
-  console.dir(event.target.dataset.source);
+
+  let closerUnblockerByClick = false;
   if (event.target.nodeName !== "IMG") {
     return;
   }
   const instance = basicLightbox.create(
     `<img src="${event.target.dataset.source}" width="1200">`,
     {
-      onClose: () => false,
+      onClose: () => closerUnblockerByClick,
     }
   );
   instance.show();
 
-  const modalWindow = document.querySelector(".basicLightbox");
   document.addEventListener("keydown", modalWindowCloser);
 
   function modalWindowCloser(event) {
-    console.log(event.code);
     if (event.code !== "Escape") {
       return;
     }
-    modalWindow.classList.remove("basicLightbox--visible");
-    modalWindow.remove();
+    closerUnblockerByClick = true;
+    instance.close();
     document.removeEventListener("keydown", modalWindowCloser);
   }
 }
